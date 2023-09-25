@@ -1,0 +1,29 @@
+<head>
+    <title>GIRITO - Transmisión</title>
+</head>
+
+{% extends "layout.html" %}
+{% block content %}
+
+{% set s_id = stream_id %}
+{% set title = title %}
+{% set summary = summary %}
+
+<div class="container">
+    <div class="column">
+
+        <h1>{{ title }}</h1>
+
+        <div id="feed_id" data-s-id="{{ s_id }}"></div>
+        <video id="video-stream" width="840" height="680" autoplay></video>
+
+        <h1>{{ summary }}</h1>
+        
+        <button id="stop-stream">Stop Stream</button>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+        <script src="{{ url_for('static', filename='js/camera_load.js') }}"></script>
+
+    </div>
+</div>
+
+{% endblock content %}  

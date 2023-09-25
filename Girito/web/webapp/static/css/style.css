@@ -1,0 +1,80 @@
+.hidden {
+    display: none;
+}
+
+#popup-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 20px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+}
+
+#close-popup {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.container {
+    display: flex;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.column {
+    flex: 1; 
+    padding: 10px; 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    text-align: center; 
+}
+
+.slideshow-container {
+    position: relative;
+    max-width: 100%;
+    overflow: hidden;
+}
+
+.slides {
+    display: flex;
+    overflow: hidden;
+    border: 1px solid #ccc;
+    margin: 0 auto; /* Center the container horizontally */
+    justify-content: center; 
+}
+
+.prev,
+.next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    padding: 16px;
+    font-size: 24px;
+    color: #333;
+    z-index: 1; /* Ensure the arrows appear above the slides */
+}
+
+.prev {
+    left: 2px; /* Adjust the left position as needed */
+}
+
+.next {
+    right: 2px; /* Adjust the right position as needed */
+}
+
+.ul {
+    list-style-type: none; /* Remove list-style-type (dots) */
+}
