@@ -1,0 +1,32 @@
+<head>
+    <title>GIRITO - Crear Publicación</title>
+</head>
+
+{% extends "layout.html" %}
+{% block content %}
+
+<div class="container">
+    <div class="column">
+        <h2><b>Crear una publicación</b></h2>
+        <div>
+            <form method="POST" action="/create_post" id="insert_post_form" enctype="multipart/form-data">
+                <div>
+                    <label class="form-label" for="title">Título: </label>
+                    <input type="text" id="title" name="title" required>
+                </div>
+                <div>
+                    <label class="form-label" for="summary">Descripción: </label>
+                    <input type="text" id="summary" name="summary">
+                </div>
+                <div>
+                    <input type="file" name="attachment" id="attachment">
+                </div>
+                <div>
+                    <button type="submit">Crear publicación</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

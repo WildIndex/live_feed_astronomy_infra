@@ -1,0 +1,29 @@
+<head>
+    <title>GIRITO - Crear Transmisión</title>
+</head>
+
+{% extends "layout.html" %}
+{% block content %}
+
+<div class="container">
+    <div class="column">
+        <h2><b>Crear una transmisión</b></h2>
+        <div>
+            <form method="POST" action="/create_stream" id="insert_stream_form">
+                <div>
+                    <label class="form-label" for="title">Título: </label>
+                    <input type="text" id="title" name="title" required>
+                </div>
+                <div>
+                    <label class="form-label" for="summary">Descripción: </label>
+                    <input type="text" id="summary" name="summary">
+                </div>
+                <div> 
+                    <button type="submit">Crear transmisión</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
