@@ -1,15 +1,5 @@
 <head>
-    <title>GIRITO - 
-        
-        {% for k, v in ind_post.items() %}
-
-            {% if k == "title" %}
-            
-                {{ v }} 
-
-            {% endif %}
-
-        {% endfor %}</title>
+    <title>GIRITO - {{ ind_post["title"] }}</title>
 </head>
 
 {% extends "layout.html" %}
@@ -17,76 +7,96 @@
 
 <div class="container">
     <div class="column">
+        <div class="form-group">
+        
+            <b><p>{{ ind_post["title"] }}</p></b>
+
+            {% if logged and owned %}
+        
+            <div class="column">
+                <div class="row">
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+
+                            <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#delete_post_modal" style="border: none; outline: none; background-color: transparent;">  
+                                <img src="/static/imgs/trash3.svg" alt="Bootstrap" width="32" height="32">
+                            </button>
+            
+                                <div class="modal fade" id="delete_post_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLongTitle"> Eliminar publicación </h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        </div>
+                                            <div class="modal-body">
+                                                ¿Deseas proceder?
+                                            </div>
+                                        <div class="modal-footer">
+            
+                                            <form action="{{ url_for('post.softdelete_post', post_id=post_id) }}" method="POST">
+                                                <button class="btn btn-dark" type="submit" style="background-color: 781C3C; color: #ffffff;"> Sí </button>
+                                            </form>
+                                            <button data-dismiss="modal" class="btn btn-dark" type="submit" id="delete_button" style="background-color: 781C3C; color: #ffffff;"> No </button>
+            
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
+                        
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <form action="{{ url_for('post.modify_post', post_id=post_id)}}" method="POST">
+                                <input type="hidden" name="ind_post" value="{{ ind_post }}">   
+                                <button type="submit" class="btn btn-dark" style="border: none; outline: none; background-color: transparent;">   
+                                    <img src="/static/imgs/pen.svg" alt="Editar" width="32" height="32">
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+
+        {% endif %}
 
         {% for k, v in ind_post.items() %}
 
-            {% if k == "title" %}
+            {% if k == "img" %}
 
-                <p>Título: {{ v }} </p>
-
-            {% elif k == "img" %}
-
-                <div>
-                    <img src="{{ url_for('static', filename='files/' + v + '.png') }}" width="640px" height="480px" alt="Image">
+                <div style="margin-bottom: 0px; border: 5px solid #781C3C;">
+                    <img src="{{ url_for('static', filename='files/' + v + '.png') }}" alt="Image" style="max-width: 100%; height: auto; margin-bottom: 0px; border: 2px solid #ffffff; overflow: hidden;">
                 </div>
 
             {% elif k == "vid" %}
 
-                <div>
-                    <video width="640px" height="480px" controls>
-                        <source src="{{ url_for('static', filename='files/' + v + '.mp4') }}" type="video/mp4">
-                    </video>
+                <div style="margin-bottom: 0px; border: 5px solid #781C3C;">
+                    <video controls style="max-width: 100%; height: auto;">
+                        <source src="{{ url_for('static', filename='files/' + v + '.mp4') }}" type="video/mp4" style="margin-bottom: 0px; border: 2px solid #ffffff;">
                 </div>
 
             {% endif %}
 
         {% endfor %}
 
-        {% for k, v in ind_post.items() %}
+        <div class="form-group" style="text-align: right;">
+            <p style="background-color: #781C3C; padding: 10px; color: white;">{{ ind_post["summary"] }}</p>
+        </div>
 
-            {% if k == "summary" %}
-
-                <p>Descripción: {{ v }} </p>
-
-            {% endif %}
-
-        {% endfor %}
-
-        
-        {% if logged and owned %}
-
-            <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#delete_post_modal">
-                Eliminar
-            </button>
-
-                <div class="modal fade" id="delete_post_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered" role="document">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h5 class="modal-title" id="exampleModalLongTitle">  </h5>
-                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                          </button>
-                        </div>
-                        <div class="modal-body">
-                          ...
-                        </div>
-                        <div class="modal-footer">
-
-                            <form action="{{ url_for('post.softdelete_post', post_id=post_id) }}" method="POST">
-                                <button class="btn btn-dark" type="submit" style="background-color: 781C3C; color: #ffffff;"> Sí </button>
-                            </form>
-                            <button data-dismiss="modal" class="btn btn-dark" type="submit" id="delete_button" style="background-color: 781C3C; color: #ffffff;"> No </button>
-
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-        {% endif %}
-        
     </div>
-</div>
+
+    </div>
+</div>  
+        
+        
+        
+    
 
 
 {% endblock content %}

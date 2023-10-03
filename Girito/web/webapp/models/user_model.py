@@ -1,4 +1,5 @@
-from webapp.db_config import db_conn
+from db_config import db_conn
+from bson import ObjectId
 
 class User:
     def __init__(self, name=None, surname=None, email=None, pwd=None, username=None, blocked=False, silenced=False, deleted=False, approved=False, role=None):
@@ -43,5 +44,15 @@ class User:
             hashed_pwd = user.get("pwd")
 
             return str(user_id), hashed_pwd
+        else:
+            return None
+        
+    def get_user_role_by_id(user_id):
+        
+        user_id_obj = ObjectId(user_id)
+        user = db_conn.db.users.find_one({'_id': user_id_obj}, {'role': 1})
+
+        if user is not None:
+            return user.get("role")
         else:
             return None

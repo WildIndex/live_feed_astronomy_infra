@@ -1,0 +1,57 @@
+<head>
+    <title>GIRITO - Búsqueda</title>
+</head>
+
+{% extends "layout.html" %}
+{% block content %}
+<!-- NEEDS TO BE WRAPPED IN NAVBAR CLASS FOR DROPDOWN TO WORK -->
+{% if not empty %}
+
+    {% for sf in stored_files %} 
+
+        <div class="container">
+            <div class="column">
+                <div class="row" style="align-items: center;">
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+
+                            {% if sf.type == 'img' %}
+                                <div class="form-group"  >
+                                    <img src="{{ url_for('static', filename=sf.file_id + '.png') }}" width="200px" height="140px" alt="Image" style="margin-bottom: 0px; border: 2px solid #ffffff;">
+                                </div>
+                            {% elif sf.type == 'vid' %}
+                                <div class="form-group" >
+                                    <video width="200px" height="140px">
+                                        <source src="{{ url_for('static', filename=sf.file_id + '.mp4') }}" type="video/mp4" style="margin-bottom: 0px; border: 2px solid #ffffff;">
+                                    </video>
+                                </div>
+                            {% endif %}
+
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group text-left">
+
+                            <h4><b>{{ sf.title }}</b></h4>
+                            <p>{{ sf.summary }}</p>
+
+                        </div>
+                    </div>
+
+                    <div style="border-bottom: 1px solid #781C3C; border-top: 5px solid #781C3C;"></div>
+
+                </div>
+            </div>
+        </div>
+
+    {% endfor %}
+
+{% elif empty %}
+
+    <h1>POST NOT FOUND!</h1>
+
+{% endif %}
+
+{% endblock content %}

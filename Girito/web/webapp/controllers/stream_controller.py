@@ -1,10 +1,10 @@
 from flask import render_template, request, redirect, url_for, send_file, Response, current_app, session, Blueprint
 from flask_session import Session
-from webapp.models.stream_model import Stream
-from webapp.models.post_model import Post
-from webapp.models.file_model import File
-from webapp.extensions import socketio
-from flask_socketio import emit
+from models.stream_model import Stream
+from models.post_model import Post
+from models.file_model import File
+from extensions import socketio
+from flask_socketio import emit, join_room, leave_room
 
 import secrets
 import datetime
@@ -18,7 +18,47 @@ streams = {}
 cap = None
 is_streaming = False
 
-streams = {}
+@socketio.on('connect')
+def handle_connect():
+    print('Client connected')
+
+@socketio.on('disconnect')
+def handle_disconnect():
+    print('Client disconnected')
+
+# Emit functions to handle WebRTC signaling
+@socketio.on('broadcaster')
+def handle_broadcaster():
+    print('Received broadcaster signal')
+    socketio.emit('broadcaster')
+
+@socketio.on('watcher')
+def handle_watcher():
+    print('Received watcher signal')
+    socketio.emit('watcher')
+
+@socketio.on('offer')
+def handle_offer(id, message):
+    print('Received offer')
+    socketio.emit('offer', id, message)
+
+@socketio.on('answer')
+def handle_answer(id, message):
+    print('Received answer')
+    socketio.emit('answer', id, message)
+
+@socketio.on('candidate')
+def handle_candidate(id, message):
+    print('Received candidate')
+    socketio.emit('candidate', id, message)
+
+@stream_routes.route('/broadcast')
+def broadcast():
+    return render_template('broadcast.html')
+
+@stream_routes.route('/watch')
+def watch():
+    return render_template('index.html')
 
 @stream_routes.route("/stream")
 def stream():
