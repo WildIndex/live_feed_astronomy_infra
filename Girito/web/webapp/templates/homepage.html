@@ -4,25 +4,27 @@
 
 {% extends "layout.html" %}
 {% block content %}
-
 <!-- NEEDS TO BE WRAPPED IN NAVBAR CLASS FOR DROPDOWN TO WORK -->
 <div class="container">
     <div class="column">
+
+        <h1><b>| Publicaciones |</b></h1>
+
         <div class="form-group">
             {% for sf in stored_files %}
-                <div class="input-group" style="padding-top: 50px;">
+                <div class="input-group" style="padding-top: 30px;">
                     <div class="column" style="text-align: left;">
                         <a href="{{ url_for('post.post', sf_id=sf._id) }}"><strong>{{ sf.title }}</strong></a>
                     </div>
                 </div>
                 {% if sf.type == 'img' %}
-                    <div class="form-group" style="margin-bottom: 0px;">
-                        <img src="{{ url_for('static', filename=sf.file_id + '.png') }}" width="440px" height="280px" alt="Image">
+                    <div class="form-group" style="margin-bottom: 0px; border: 5px solid #781C3C;">
+                        <img src="{{ url_for('static', filename=sf.file_id + '.png') }}" alt="Image" style="max-width: 100%; height: auto; margin-bottom: 0px; border: 2px solid #ffffff; overflow: hidden;">
                     </div>
                 {% elif sf.type == 'vid' %}
-                    <div class="form-group" style="margin-bottom: 0px;">
-                        <video width="440px" height="280px" controls>
-                            <source src="{{ url_for('static', filename=sf.file_id + '.mp4') }}" type="video/mp4">
+                    <div class="form-group" style="margin-bottom: 0px; border: 5px solid #781C3C;">
+                        <video controls style="max-width: 100%; height: auto;">
+                            <source src="{{ url_for('static', filename=sf.file_id + '.mp4') }}" type="video/mp4" style="margin-bottom: 0px; border: 2px solid #ffffff;">
                         </video>
                     </div>
                 {% endif %}

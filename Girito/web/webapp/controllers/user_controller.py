@@ -1,6 +1,6 @@
 from flask import render_template, request, redirect, url_for, Blueprint, current_app, session
 import bcrypt
-from webapp.models.user_model import User
+from models.user_model import User
 
 user_routes = Blueprint('user', __name__)
 
@@ -23,16 +23,27 @@ def sign_in():
 
     user_data = User.check_valid_user(email_username)
 
-    user_id, hashed_pwd = user_data
+    if user_data is not None:
 
-    if user_id is not None:
+        user_id, hashed_pwd = user_data
 
-        if bcrypt.checkpw(pwd.encode("utf-8"), hashed_pwd):
-            session['user_id'] = str(user_id)
-            session['logged'] = True
-            return redirect(url_for("homepage"))
-        else:
-            return redirect(url_for("user.login"))
+        if user_id is not None:
+
+            if bcrypt.checkpw(pwd.encode("utf-8"), hashed_pwd):
+
+                role = User.get_user_role_by_id(user_id)
+
+                session['user_id'] = str(user_id)
+                session['role'] = str(role)
+                session['logged'] = True
+                
+                return redirect(url_for("homepage"))
+            else:
+                ## INCORRECT USER INPUT DATA ##
+                return redirect(url_for("user.login"))
+    else:
+        ## INCORRECT USER INPUT DATA ##
+        return redirect(url_for("user.login"))
 
 @user_routes.route("/sign_up", methods=["POST"])
 def sign_up():

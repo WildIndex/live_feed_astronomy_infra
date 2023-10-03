@@ -1,4 +1,4 @@
-from webapp.db_config import db_conn
+from db_config import db_conn
 from bson import ObjectId
 
 class File:

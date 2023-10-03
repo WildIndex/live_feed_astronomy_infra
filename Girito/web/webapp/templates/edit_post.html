@@ -1,0 +1,38 @@
+<head>
+    <title>GIRITO - Modificar Publicación</title>
+</head>
+
+{% extends "layout.html" %}
+{% block content %}
+
+<div class="container">
+    <div class="column">
+        <h2 style="margin-bottom: 40px;"><b>Modificar Publicación</b></h2>
+        <div>
+            <form method="POST" action="{{ url_for('post.edit_post', post_id=post_id)}}" id="edit_post_form" enctype="multipart/form-data" novalidate onsubmit="return validateForm()">
+                <div>
+                    <label class="form-label" text=title for="title">Título</label>
+                    <input class="form-control" type="text" id="title" name="title" value="{{ ind_post['title'] }}">
+                    <small id="titleError" class="text-danger" style="display: block;"></small>
+                </div>
+                <div style="margin-top: 10px;">
+                    <label class="form-label" for="summary" >Descripción</label>
+                    <textarea class="form-control" aria-label="With textarea" rows="5" cols="40" type="text" id="summary" name="summary" style="resize: none;">{{ ind_post['summary'] }}</textarea>   
+                    <small id="summaryError" class="text-danger" style="display: block;"></small>             
+                </div>
+                <div class="custom-file">
+                    <input type="file" name="attachment" id="attachment" class="custom-file-input" id="inputGroupFile01" onchange="displayFileName(this)">
+                    <label class="custom-file-label" for="inputGroupFile01">Elija un Archivo</label>
+                    <small id="fileError" class="text-danger" style="display: block;"></small>
+                </div>
+                <button type="submit" class="btn btn-dark" style="background-color: #781C3C; color: #ffffff; margin-top: 40px;">   
+                    Modificar Publicación
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="{{ url_for('static', filename='js/create_post_validation.js') }}"></script>  
+
+{% endblock content %}
